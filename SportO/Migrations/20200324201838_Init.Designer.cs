@@ -10,7 +10,7 @@ using SportO.Data;
 namespace SportO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200323190623_Init")]
+    [Migration("20200324201838_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,36 +50,36 @@ namespace SportO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9544abf2-45ce-4ba3-883f-1c29c7a60b80",
-                            ConcurrencyStamp = "a1b53056-fe8b-4217-8cf7-796e2b4f3714",
+                            Id = "04f4f80f-d6db-45f8-a089-6066dd09255c",
+                            ConcurrencyStamp = "a558d331-9eb4-4fa6-b967-7a558046e847",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "cf893c06-a30f-48e3-9513-26912addb348",
-                            ConcurrencyStamp = "1875b820-c984-475d-a619-7d61b14ce50a",
+                            Id = "9243d485-8457-4987-8989-989e609ebd5f",
+                            ConcurrencyStamp = "54677366-c8bc-410b-874c-95acb9756406",
                             Name = "League Owner",
                             NormalizedName = "LEAGUE OWNER"
                         },
                         new
                         {
-                            Id = "4c3caf3e-6932-4812-bb77-d322b6bb1d23",
-                            ConcurrencyStamp = "3e053a0a-b17e-4bc3-95e2-c7156f5b5821",
+                            Id = "3be23b10-7d37-4bb1-b883-7a32e82382e5",
+                            ConcurrencyStamp = "c7ee71b6-8f3f-491e-94ba-876279287b2c",
                             Name = "Team Owner",
                             NormalizedName = "TEAM OWNER"
                         },
                         new
                         {
-                            Id = "4645ebf3-2baf-410c-84b5-973327478b46",
-                            ConcurrencyStamp = "4ae9c6ad-4e0b-4c08-9713-517b0b6cc9e6",
+                            Id = "18de3721-15d0-484f-be01-1079f489b9a6",
+                            ConcurrencyStamp = "49ad617a-3d9c-4b66-be8b-6b3074d5858b",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "61944b63-c6fb-424e-a85f-0d93c446f23c",
-                            ConcurrencyStamp = "794da39c-50b9-4a23-9678-9ffcedb3b68c",
+                            Id = "b9a11e9e-6787-4a5a-9952-ddb9ce645f1a",
+                            ConcurrencyStamp = "197347ec-7d34-42c8-bad7-a28eb12212d8",
                             Name = "Player",
                             NormalizedName = "PLAYER"
                         });
@@ -252,6 +252,48 @@ namespace SportO.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("SportO.Models.Season", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("mPointsAgainst")
+                        .HasColumnType("int");
+
+                    b.Property<int>("mPointsFavor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("matchesLost")
+                        .HasColumnType("int");
+
+                    b.Property<int>("matchesPlayed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("matchesTied")
+                        .HasColumnType("int");
+
+                    b.Property<int>("matchesWon")
+                        .HasColumnType("int");
+
+                    b.Property<string>("seasonName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("seasonRecord")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Seasons");
                 });
 
             modelBuilder.Entity("SportO_SLMS.Models.League", b =>
@@ -624,6 +666,15 @@ namespace SportO.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SportO.Models.Season", b =>
+                {
+                    b.HasOne("SportO_SLMS.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SportO.Models;
 using SportO_SLMS.Models;
 
 namespace SportO.Data
@@ -88,5 +89,6 @@ namespace SportO.Data
         public DbSet<Team> Teams { get; set; }
         public DbSet<Roster> Rosters { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Season> Seasons { get; set; }
     }
 }

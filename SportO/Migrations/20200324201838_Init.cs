@@ -422,16 +422,43 @@ namespace SportO.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Seasons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    seasonName = table.Column<string>(nullable: false),
+                    matchesPlayed = table.Column<int>(nullable: false),
+                    matchesWon = table.Column<int>(nullable: false),
+                    matchesLost = table.Column<int>(nullable: false),
+                    matchesTied = table.Column<int>(nullable: false),
+                    mPointsFavor = table.Column<int>(nullable: false),
+                    mPointsAgainst = table.Column<int>(nullable: false),
+                    seasonRecord = table.Column<int>(nullable: false),
+                    TeamId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seasons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Seasons_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9544abf2-45ce-4ba3-883f-1c29c7a60b80", "a1b53056-fe8b-4217-8cf7-796e2b4f3714", "Admin", "ADMIN" },
-                    { "cf893c06-a30f-48e3-9513-26912addb348", "1875b820-c984-475d-a619-7d61b14ce50a", "League Owner", "LEAGUE OWNER" },
-                    { "4c3caf3e-6932-4812-bb77-d322b6bb1d23", "3e053a0a-b17e-4bc3-95e2-c7156f5b5821", "Team Owner", "TEAM OWNER" },
-                    { "4645ebf3-2baf-410c-84b5-973327478b46", "4ae9c6ad-4e0b-4c08-9713-517b0b6cc9e6", "Referee", "REFEREE" },
-                    { "61944b63-c6fb-424e-a85f-0d93c446f23c", "794da39c-50b9-4a23-9678-9ffcedb3b68c", "Player", "PLAYER" }
+                    { "04f4f80f-d6db-45f8-a089-6066dd09255c", "a558d331-9eb4-4fa6-b967-7a558046e847", "Admin", "ADMIN" },
+                    { "9243d485-8457-4987-8989-989e609ebd5f", "54677366-c8bc-410b-874c-95acb9756406", "League Owner", "LEAGUE OWNER" },
+                    { "3be23b10-7d37-4bb1-b883-7a32e82382e5", "c7ee71b6-8f3f-491e-94ba-876279287b2c", "Team Owner", "TEAM OWNER" },
+                    { "18de3721-15d0-484f-be01-1079f489b9a6", "49ad617a-3d9c-4b66-be8b-6b3074d5858b", "Referee", "REFEREE" },
+                    { "b9a11e9e-6787-4a5a-9952-ddb9ce645f1a", "197347ec-7d34-42c8-bad7-a28eb12212d8", "Player", "PLAYER" }
                 });
 
             migrationBuilder.InsertData(
@@ -556,6 +583,11 @@ namespace SportO.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Seasons_TeamId",
+                table: "Seasons",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TeamOwners_IdentityUserId",
                 table: "TeamOwners",
                 column: "IdentityUserId");
@@ -598,6 +630,9 @@ namespace SportO.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rosters");
+
+            migrationBuilder.DropTable(
+                name: "Seasons");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
