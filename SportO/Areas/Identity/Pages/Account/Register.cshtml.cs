@@ -109,10 +109,25 @@ namespace SportO.Areas.Identity.Pages.Account
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
                     }
+                    else if (Input.Role == ("League Owner"))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: true);
+                        return RedirectToAction("Create", "LeagueOwners");
+                    }
+                    else if (Input.Role == ("Team Owner"))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: true);
+                        return RedirectToAction("Create", "TeamOwners");
+                    }
+                    else if (Input.Role == ("Referee"))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: true);
+                        return RedirectToAction("Create", "Referees");
+                    }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        await _signInManager.SignInAsync(user, isPersistent: true);
+                        return RedirectToAction("Create", "Players");
                     }
                 }
                 foreach (var error in result.Errors)

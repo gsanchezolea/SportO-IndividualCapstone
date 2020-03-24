@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,10 @@ namespace SportO_SLMS.Models
         public string lastName { get; set; }
 
         public bool accountActive { get; set; }
+
+        [ForeignKey("IdentityUser")]
+        public string IdentityUserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
 
         [ForeignKey("Phone")]
         public int PhoneId { get; set; }

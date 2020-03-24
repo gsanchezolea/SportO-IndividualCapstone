@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SportO_SLMS.Models.League>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1></h1>
+
+<p>
+    <a asp-action="Create" asp-controller="Leagues">Create New League</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.leagueName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.teamCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport.type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.leagueName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.teamCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sport.type)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

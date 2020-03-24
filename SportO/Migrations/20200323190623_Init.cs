@@ -1,36 +1,50 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SportO.Data.Migrations
+namespace SportO.Migrations
 {
-    public partial class Second : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "26b6e53b-7790-44aa-882d-32e593ffbf16");
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
 
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "37d5a592-ad88-4f79-8f6c-5b38ceb3b2f9");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "77cf4bda-0012-4da1-b62e-32c07977115d");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "c89dba24-3f91-4d28-8ac7-86281641ea8b");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "d16f826c-ea32-4e21-b358-7c47eb97a616");
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Phones",
@@ -46,7 +60,7 @@ namespace SportO.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sport",
+                name: "Sports",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -55,7 +69,113 @@ namespace SportO.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sport", x => x.Id);
+                    table.PrimaryKey("PK_Sports", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,11 +187,18 @@ namespace SportO.Data.Migrations
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
                     accountActive = table.Column<bool>(nullable: false),
+                    IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LeagueOwners", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LeagueOwners_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LeagueOwners_Phones_PhoneId",
                         column: x => x.PhoneId,
@@ -89,11 +216,18 @@ namespace SportO.Data.Migrations
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
                     accountActive = table.Column<bool>(nullable: false),
+                    IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Players", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Players_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Players_Phones_PhoneId",
                         column: x => x.PhoneId,
@@ -111,11 +245,18 @@ namespace SportO.Data.Migrations
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
                     accountActive = table.Column<bool>(nullable: false),
+                    IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Referees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Referees_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Referees_Phones_PhoneId",
                         column: x => x.PhoneId,
@@ -133,11 +274,18 @@ namespace SportO.Data.Migrations
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
                     accountActive = table.Column<bool>(nullable: false),
+                    IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TeamOwners", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeamOwners_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TeamOwners_Phones_PhoneId",
                         column: x => x.PhoneId,
@@ -167,9 +315,9 @@ namespace SportO.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Leagues_Sport_SportId",
+                        name: "FK_Leagues_Sports_SportId",
                         column: x => x.SportId,
-                        principalTable: "Sport",
+                        principalTable: "Sports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -279,15 +427,15 @@ namespace SportO.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "a81704d2-8437-45c9-a2fa-3d43cafb92cc", "14f07059-8d92-4de3-93e6-3c3e32f4be1b", "Admin", "ADMIN" },
-                    { "eef76c23-00fa-4c77-ba98-50336d019133", "f2deea35-c303-457b-b7e9-0724249b7538", "League Owner", "LEAGUE OWNER" },
-                    { "4db88156-ffee-4d66-907d-ecfc53d1a730", "b08c9d06-e69a-45da-9947-fe0c40774167", "Team Owner", "TEAM OWNER" },
-                    { "744ca06f-a7c3-4be3-9274-581c11d52656", "b9f9d2bc-b150-4e42-a12c-63e310040f67", "Referee", "REFEREE" },
-                    { "dc8242a0-70cd-4a29-8b83-42776db528bb", "d8319695-6f28-41fd-ac7e-4ec533704ac3", "Player", "PLAYER" }
+                    { "9544abf2-45ce-4ba3-883f-1c29c7a60b80", "a1b53056-fe8b-4217-8cf7-796e2b4f3714", "Admin", "ADMIN" },
+                    { "cf893c06-a30f-48e3-9513-26912addb348", "1875b820-c984-475d-a619-7d61b14ce50a", "League Owner", "LEAGUE OWNER" },
+                    { "4c3caf3e-6932-4812-bb77-d322b6bb1d23", "3e053a0a-b17e-4bc3-95e2-c7156f5b5821", "Team Owner", "TEAM OWNER" },
+                    { "4645ebf3-2baf-410c-84b5-973327478b46", "4ae9c6ad-4e0b-4c08-9713-517b0b6cc9e6", "Referee", "REFEREE" },
+                    { "61944b63-c6fb-424e-a85f-0d93c446f23c", "794da39c-50b9-4a23-9678-9ffcedb3b68c", "Player", "PLAYER" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Sport",
+                table: "Sports",
                 columns: new[] { "Id", "type" },
                 values: new object[,]
                 {
@@ -297,6 +445,50 @@ namespace SportO.Data.Migrations
                     { 4, "Hockey" },
                     { 5, "Rugby" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeagueOwners_IdentityUserId",
+                table: "LeagueOwners",
+                column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeagueOwners_PhoneId",
@@ -334,9 +526,19 @@ namespace SportO.Data.Migrations
                 column: "RefereeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Players_IdentityUserId",
+                table: "Players",
+                column: "IdentityUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Players_PhoneId",
                 table: "Players",
                 column: "PhoneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Referees_IdentityUserId",
+                table: "Referees",
+                column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Referees_PhoneId",
@@ -352,6 +554,11 @@ namespace SportO.Data.Migrations
                 name: "IX_Rosters_TeamId",
                 table: "Rosters",
                 column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamOwners_IdentityUserId",
+                table: "TeamOwners",
+                column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamOwners_PhoneId",
@@ -372,10 +579,28 @@ namespace SportO.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "Matches");
 
             migrationBuilder.DropTable(
                 name: "Rosters");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Referees");
@@ -396,47 +621,13 @@ namespace SportO.Data.Migrations
                 name: "LeagueOwners");
 
             migrationBuilder.DropTable(
-                name: "Sport");
+                name: "Sports");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Phones");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "4db88156-ffee-4d66-907d-ecfc53d1a730");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "744ca06f-a7c3-4be3-9274-581c11d52656");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "a81704d2-8437-45c9-a2fa-3d43cafb92cc");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "dc8242a0-70cd-4a29-8b83-42776db528bb");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "eef76c23-00fa-4c77-ba98-50336d019133");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "77cf4bda-0012-4da1-b62e-32c07977115d", "1afc7989-d12f-408e-8cf3-e159a2a2b91d", "Admin", "ADMIN" },
-                    { "37d5a592-ad88-4f79-8f6c-5b38ceb3b2f9", "d158e215-238a-4619-8e94-1cd71c420093", "League Owner", "LEAGUE OWNER" },
-                    { "26b6e53b-7790-44aa-882d-32e593ffbf16", "ee838aa2-f41d-43e8-9265-92185e977c81", "Team Owner", "TEAM OWNER" },
-                    { "d16f826c-ea32-4e21-b358-7c47eb97a616", "e1f1720f-ece2-4b1d-9f8c-403385427fa5", "Referee", "REFEREE" },
-                    { "c89dba24-3f91-4d28-8ac7-86281641ea8b", "25876079-c83a-4eec-a0c0-2edfd82c599f", "Player", "PLAYER" }
-                });
         }
     }
 }

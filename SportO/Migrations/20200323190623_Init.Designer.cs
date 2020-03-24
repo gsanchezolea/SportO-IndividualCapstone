@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportO.Data;
 
-namespace SportO.Data.Migrations
+namespace SportO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200320204116_Second")]
-    partial class Second
+    [Migration("20200323190623_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,36 +50,36 @@ namespace SportO.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a81704d2-8437-45c9-a2fa-3d43cafb92cc",
-                            ConcurrencyStamp = "14f07059-8d92-4de3-93e6-3c3e32f4be1b",
+                            Id = "9544abf2-45ce-4ba3-883f-1c29c7a60b80",
+                            ConcurrencyStamp = "a1b53056-fe8b-4217-8cf7-796e2b4f3714",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "eef76c23-00fa-4c77-ba98-50336d019133",
-                            ConcurrencyStamp = "f2deea35-c303-457b-b7e9-0724249b7538",
+                            Id = "cf893c06-a30f-48e3-9513-26912addb348",
+                            ConcurrencyStamp = "1875b820-c984-475d-a619-7d61b14ce50a",
                             Name = "League Owner",
                             NormalizedName = "LEAGUE OWNER"
                         },
                         new
                         {
-                            Id = "4db88156-ffee-4d66-907d-ecfc53d1a730",
-                            ConcurrencyStamp = "b08c9d06-e69a-45da-9947-fe0c40774167",
+                            Id = "4c3caf3e-6932-4812-bb77-d322b6bb1d23",
+                            ConcurrencyStamp = "3e053a0a-b17e-4bc3-95e2-c7156f5b5821",
                             Name = "Team Owner",
                             NormalizedName = "TEAM OWNER"
                         },
                         new
                         {
-                            Id = "744ca06f-a7c3-4be3-9274-581c11d52656",
-                            ConcurrencyStamp = "b9f9d2bc-b150-4e42-a12c-63e310040f67",
+                            Id = "4645ebf3-2baf-410c-84b5-973327478b46",
+                            ConcurrencyStamp = "4ae9c6ad-4e0b-4c08-9713-517b0b6cc9e6",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "dc8242a0-70cd-4a29-8b83-42776db528bb",
-                            ConcurrencyStamp = "d8319695-6f28-41fd-ac7e-4ec533704ac3",
+                            Id = "61944b63-c6fb-424e-a85f-0d93c446f23c",
+                            ConcurrencyStamp = "794da39c-50b9-4a23-9678-9ffcedb3b68c",
                             Name = "Player",
                             NormalizedName = "PLAYER"
                         });
@@ -290,6 +290,9 @@ namespace SportO.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
 
@@ -305,6 +308,8 @@ namespace SportO.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.HasIndex("PhoneId");
 
@@ -379,6 +384,9 @@ namespace SportO.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
 
@@ -394,6 +402,8 @@ namespace SportO.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.HasIndex("PhoneId");
 
@@ -407,6 +417,9 @@ namespace SportO.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
 
@@ -422,6 +435,8 @@ namespace SportO.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.HasIndex("PhoneId");
 
@@ -470,7 +485,7 @@ namespace SportO.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sport");
+                    b.ToTable("Sports");
 
                     b.HasData(
                         new
@@ -536,6 +551,9 @@ namespace SportO.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
 
@@ -551,6 +569,8 @@ namespace SportO.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.HasIndex("PhoneId");
 
@@ -625,6 +645,10 @@ namespace SportO.Data.Migrations
 
             modelBuilder.Entity("SportO_SLMS.Models.LeagueOwner", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
                     b.HasOne("SportO_SLMS.Models.Phone", "Phone")
                         .WithMany()
                         .HasForeignKey("PhoneId")
@@ -655,6 +679,10 @@ namespace SportO.Data.Migrations
 
             modelBuilder.Entity("SportO_SLMS.Models.Player", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
                     b.HasOne("SportO_SLMS.Models.Phone", "Phone")
                         .WithMany()
                         .HasForeignKey("PhoneId")
@@ -664,6 +692,10 @@ namespace SportO.Data.Migrations
 
             modelBuilder.Entity("SportO_SLMS.Models.Referee", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
                     b.HasOne("SportO_SLMS.Models.Phone", "Phone")
                         .WithMany()
                         .HasForeignKey("PhoneId")
@@ -697,6 +729,10 @@ namespace SportO.Data.Migrations
 
             modelBuilder.Entity("SportO_SLMS.Models.TeamOwner", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
                     b.HasOne("SportO_SLMS.Models.Phone", "Phone")
                         .WithMany()
                         .HasForeignKey("PhoneId")

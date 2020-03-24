@@ -82,6 +82,7 @@ namespace SportO.Data
         public DbSet<LeagueOwner> LeagueOwners { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<TeamOwner> TeamOwners { get; set; }
+        public DbSet<Sport> Sports { get; set; }
         public DbSet<Referee> Referees { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
