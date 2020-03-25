@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -60,17 +61,26 @@ namespace SportO.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,name,capacity,LeagueId,TeamOwnerId")] Team team)
+        public async Task<IActionResult> Create(Team team)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(team);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            var dbLeague = _context.Leagues.Where(l => l.Id == team.LeagueId).SingleOrDefault();           
+               
+                if (ModelState.IsValid && dbLeague.teamCapacity != 0)
+                {                    
+                    var identityUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var dbUserLoggedInId = _context.TeamOwners.Where(t => t.IdentityUserId == identityUserId).FirstOrDefault().Id;
+                    team.TeamOwnerId = dbUserLoggedInId; 
+                    _context.Add(team);
+                    dbLeague.teamCapacity--;
+                    await _context.SaveChangesAsync();                    
+                    return RedirectToAction("Index", "TeamOwners");
+                }
+               
+            
             ViewData["LeagueId"] = new SelectList(_context.Leagues, "Id", "leagueName", team.LeagueId);
             ViewData["TeamOwnerId"] = new SelectList(_context.TeamOwners, "Id", "firstName", team.TeamOwnerId);
             return View(team);
+
         }
 
         // GET: Teams/Edit/5
