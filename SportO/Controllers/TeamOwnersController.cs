@@ -162,5 +162,6 @@ namespace SportO.Controllers
         {
             return _context.TeamOwners.Any(e => e.Id == id);
         }
+        
     }
 }

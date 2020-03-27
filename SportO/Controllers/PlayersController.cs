@@ -23,8 +23,10 @@ namespace SportO.Controllers
         // GET: Players
         public async Task<IActionResult> Index()
         {
+            var userLoggedInId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); 
+            var dbPlayer = _context.LeagueOwners.Where(s => s.IdentityUserId == userLoggedInId).SingleOrDefault(); 
             
-            return View();
+            return View(dbPlayer);
         }
 
         // GET: Players/Details/5

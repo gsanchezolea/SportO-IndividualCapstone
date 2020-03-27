@@ -22,7 +22,7 @@ namespace SportO_SLMS.Models
         [Display(Name = "Last Name")]
         public string lastName { get; set; }
 
-        public bool accountActive { get; set; }
+        
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

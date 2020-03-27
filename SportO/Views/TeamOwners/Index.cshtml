@@ -8,20 +8,16 @@
 
 
 <p>
-    <a asp-action="Create" asp-controller="Teams">Create New</a>
+    <a asp-action="Create" asp-controller="Teams">Create New Team</a>
+</p>
+
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.League)
-            </th>          
+            </th>            
             <th></th>
         </tr>
     </thead>
@@ -30,21 +26,12 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
+                    @Html.ActionLink(item.name, "Index", "Rosters", new { id = item.Id}, null)
+                </td>   
                 <td>
-                    @Html.DisplayFor(modelItem => item.capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.League.leagueName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TeamOwner.firstName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-controller="Teams" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-controller="Teams" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-controller="Teams" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

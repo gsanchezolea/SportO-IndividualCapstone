@@ -10,7 +10,7 @@ using SportO.Data;
 namespace SportO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200324201838_Init")]
+    [Migration("20200327020510_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,36 +50,36 @@ namespace SportO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "04f4f80f-d6db-45f8-a089-6066dd09255c",
-                            ConcurrencyStamp = "a558d331-9eb4-4fa6-b967-7a558046e847",
+                            Id = "d02fea09-1540-441a-abdd-17e49ebd360a",
+                            ConcurrencyStamp = "9b4f7143-339d-49b9-8ba7-24afcb144a45",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9243d485-8457-4987-8989-989e609ebd5f",
-                            ConcurrencyStamp = "54677366-c8bc-410b-874c-95acb9756406",
+                            Id = "7cad5575-1a59-4955-bfe7-bb5c98da1bb0",
+                            ConcurrencyStamp = "44592f54-76a2-49d4-82a7-e17ca7558c2c",
                             Name = "League Owner",
                             NormalizedName = "LEAGUE OWNER"
                         },
                         new
                         {
-                            Id = "3be23b10-7d37-4bb1-b883-7a32e82382e5",
-                            ConcurrencyStamp = "c7ee71b6-8f3f-491e-94ba-876279287b2c",
+                            Id = "a5aeabcd-a229-4b26-882f-10ad323fbbfa",
+                            ConcurrencyStamp = "6174ead5-1614-4921-b5a2-3426a497b51e",
                             Name = "Team Owner",
                             NormalizedName = "TEAM OWNER"
                         },
                         new
                         {
-                            Id = "18de3721-15d0-484f-be01-1079f489b9a6",
-                            ConcurrencyStamp = "49ad617a-3d9c-4b66-be8b-6b3074d5858b",
+                            Id = "daa89f97-a2d9-4872-a909-408089dd6439",
+                            ConcurrencyStamp = "0f82885e-8435-42d1-b1e6-8091eca92098",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "b9a11e9e-6787-4a5a-9952-ddb9ce645f1a",
-                            ConcurrencyStamp = "197347ec-7d34-42c8-bad7-a28eb12212d8",
+                            Id = "662af38e-e948-42d9-bfa8-0f46d1e3446c",
+                            ConcurrencyStamp = "96b12759-e02f-475c-9524-b42f21bc5a31",
                             Name = "Player",
                             NormalizedName = "PLAYER"
                         });
@@ -338,9 +338,6 @@ namespace SportO.Migrations
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("accountActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("firstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -387,8 +384,10 @@ namespace SportO.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("location")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("matchDay")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -431,9 +430,6 @@ namespace SportO.Migrations
 
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("accountActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("firstName")
                         .IsRequired()
@@ -498,11 +494,13 @@ namespace SportO.Migrations
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("accountActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("kitNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("playingPosition")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -570,6 +568,9 @@ namespace SportO.Migrations
                     b.Property<int?>("TeamOwnerId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("accountActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("capacity")
                         .HasColumnType("int");
 
@@ -598,9 +599,6 @@ namespace SportO.Migrations
 
                     b.Property<int>("PhoneId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("accountActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("firstName")
                         .IsRequired()

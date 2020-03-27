@@ -1,36 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportO.Data;
-using SportO_SLMS.Models;
+using SportO.Models;
 
 namespace SportO.Controllers
 {
-    public class RefereesController : Controller
+    public class SeasonsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public RefereesController(ApplicationDbContext context)
+        public SeasonsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Referees
+        // GET: Seasons
         public async Task<IActionResult> Index()
         {
-            var userLoggedInId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var dbReferee = _context.Referees.Where(s => s.IdentityUserId == userLoggedInId).FirstOrDefault();
-            return View(dbReferee);
-
-           
+            var applicationDbContext = _context.Seasons.Include(s => s.Team);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Referees/Details/5
+        // GET: Seasons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,45 +34,42 @@ namespace SportO.Controllers
                 return NotFound();
             }
 
-            var referee = await _context.Referees
-                .Include(r => r.Phone)
+            var season = await _context.Seasons
+                .Include(s => s.Team)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (referee == null)
+            if (season == null)
             {
                 return NotFound();
             }
 
-            return View(referee);
+            return View(season);
         }
 
-        // GET: Referees/Create
+        // GET: Seasons/Create
         public IActionResult Create()
         {
-            var referee = new Referee();
-            referee = _context.Referees.Include(l => l.Phone).FirstOrDefault();
-            return View(referee);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "name");
+            return View();
         }
 
-        // POST: Referees/Create
+        // POST: Seasons/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Referee referee)
+        public async Task<IActionResult> Create([Bind("Id,seasonName,matchesPlayed,matchesWon,matchesLost,matchesTied,mPointsFavor,mPointsAgainst,seasonRecord,TeamId")] Season season)
         {
             if (ModelState.IsValid)
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                referee.IdentityUserId = userId;
-                _context.Add(referee);
+                _context.Add(season);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PhoneId"] = new SelectList(_context.Phones, "Id", "phoneNumber", referee.PhoneId);
-            return View(referee);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "name", season.TeamId);
+            return View(season);
         }
 
-        // GET: Referees/Edit/5
+        // GET: Seasons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,23 +77,23 @@ namespace SportO.Controllers
                 return NotFound();
             }
 
-            var referee = await _context.Referees.FindAsync(id);
-            if (referee == null)
+            var season = await _context.Seasons.FindAsync(id);
+            if (season == null)
             {
                 return NotFound();
             }
-            ViewData["PhoneId"] = new SelectList(_context.Phones, "Id", "phoneNumber", referee.PhoneId);
-            return View(referee);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "name", season.TeamId);
+            return View(season);
         }
 
-        // POST: Referees/Edit/5
+        // POST: Seasons/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,firstName,lastName,accountActive,PhoneId")] Referee referee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,seasonName,matchesPlayed,matchesWon,matchesLost,matchesTied,mPointsFavor,mPointsAgainst,seasonRecord,TeamId")] Season season)
         {
-            if (id != referee.Id)
+            if (id != season.Id)
             {
                 return NotFound();
             }
@@ -109,12 +102,12 @@ namespace SportO.Controllers
             {
                 try
                 {
-                    _context.Update(referee);
+                    _context.Update(season);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RefereeExists(referee.Id))
+                    if (!SeasonExists(season.Id))
                     {
                         return NotFound();
                     }
@@ -125,11 +118,11 @@ namespace SportO.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PhoneId"] = new SelectList(_context.Phones, "Id", "phoneNumber", referee.PhoneId);
-            return View(referee);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "name", season.TeamId);
+            return View(season);
         }
 
-        // GET: Referees/Delete/5
+        // GET: Seasons/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,31 +130,31 @@ namespace SportO.Controllers
                 return NotFound();
             }
 
-            var referee = await _context.Referees
-                .Include(r => r.Phone)
+            var season = await _context.Seasons
+                .Include(s => s.Team)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (referee == null)
+            if (season == null)
             {
                 return NotFound();
             }
 
-            return View(referee);
+            return View(season);
         }
 
-        // POST: Referees/Delete/5
+        // POST: Seasons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var referee = await _context.Referees.FindAsync(id);
-            _context.Referees.Remove(referee);
+            var season = await _context.Seasons.FindAsync(id);
+            _context.Seasons.Remove(season);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RefereeExists(int id)
+        private bool SeasonExists(int id)
         {
-            return _context.Referees.Any(e => e.Id == id);
+            return _context.Seasons.Any(e => e.Id == id);
         }
     }
 }

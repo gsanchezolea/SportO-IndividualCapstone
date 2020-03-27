@@ -13,12 +13,15 @@ namespace SportO_SLMS.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Account Active")]
+        public bool accountActive { get; set; }
+
         [Required]
         [Display(Name = "Team Name")]
         public string name { get; set; }
 
         [Required]
-        [Display(Name = "Team Capacity")]
+        [Display(Name = "Available Spots")]
         public int capacity { get; set; }
 
         [ForeignKey("League")]

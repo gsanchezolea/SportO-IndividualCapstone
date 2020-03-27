@@ -19,9 +19,6 @@
                 @Html.DisplayNameFor(model => model.leagueName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.teamCapacity)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Sport.type)
             </th>
             <th></th>
@@ -32,18 +29,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.leagueName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.teamCapacity)
+                    @Html.ActionLink(item.leagueName, "Index", "Teams", new { id = item.Id }, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Sport.type)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="GenerateMatches" asp-controller="Matches" asp-route-id="@item.Id">Generate Matches</a> |
+                    <a asp-action="Edit" asp-controller="Leagues" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-controller="Leagues" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-controller="Leagues" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

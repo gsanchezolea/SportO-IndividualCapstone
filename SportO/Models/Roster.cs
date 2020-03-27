@@ -13,11 +13,13 @@ namespace SportO_SLMS.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Display(Name = "Account Active")]
+        public bool accountActive { get; set; }
+
         [Display(Name = "Position")]
         public string playingPosition { get; set; }
 
-        [Required]
+        
         [Display(Name = "Kit Number")]
         public int kitNumber { get; set; }
 

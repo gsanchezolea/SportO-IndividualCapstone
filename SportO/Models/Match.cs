@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportO.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -13,19 +14,21 @@ namespace SportO_SLMS.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Display(Name = "Match Day")]
+        public int matchDay { get; set; }
+
         [Display(Name = "Date/Time")]
         public DateTime date { get; set; }
 
-        [Required]
+        
         [Display(Name = "Location")]
         public string location { get; set; }
 
-        [Required]
+       
         [Display(Name = "Home Team Score")]
         public int homeTeamScore { get; set; }
 
-        [Required]
+        
         [Display(Name = "Away Team Score")]
         public int awayTeamScore { get; set; }
 

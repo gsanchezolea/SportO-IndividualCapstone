@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SportO.Models.Season>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.seasonName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.matchesPlayed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.matchesWon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.matchesLost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.matchesTied)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mPointsFavor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mPointsAgainst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.seasonRecord)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Team)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.seasonName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.matchesPlayed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.matchesWon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.matchesLost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.matchesTied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mPointsFavor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mPointsAgainst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.seasonRecord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Team.name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

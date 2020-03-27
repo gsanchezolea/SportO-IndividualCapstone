@@ -186,7 +186,6 @@ namespace SportO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
-                    accountActive = table.Column<bool>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
@@ -215,7 +214,6 @@ namespace SportO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
-                    accountActive = table.Column<bool>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
@@ -273,7 +271,6 @@ namespace SportO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(nullable: false),
                     lastName = table.Column<string>(nullable: false),
-                    accountActive = table.Column<bool>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true),
                     PhoneId = table.Column<int>(nullable: false)
                 },
@@ -328,6 +325,7 @@ namespace SportO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    accountActive = table.Column<bool>(nullable: false),
                     name = table.Column<string>(nullable: false),
                     capacity = table.Column<int>(nullable: false),
                     LeagueId = table.Column<int>(nullable: false),
@@ -356,8 +354,9 @@ namespace SportO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    matchDay = table.Column<int>(nullable: false),
                     date = table.Column<DateTime>(nullable: false),
-                    location = table.Column<string>(nullable: false),
+                    location = table.Column<string>(nullable: true),
                     homeTeamScore = table.Column<int>(nullable: false),
                     awayTeamScore = table.Column<int>(nullable: false),
                     HomeTeamId = table.Column<int>(nullable: true),
@@ -400,7 +399,8 @@ namespace SportO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    playingPosition = table.Column<string>(nullable: false),
+                    accountActive = table.Column<bool>(nullable: false),
+                    playingPosition = table.Column<string>(nullable: true),
                     kitNumber = table.Column<int>(nullable: false),
                     TeamId = table.Column<int>(nullable: true),
                     PlayerId = table.Column<int>(nullable: true)
@@ -454,11 +454,11 @@ namespace SportO.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "04f4f80f-d6db-45f8-a089-6066dd09255c", "a558d331-9eb4-4fa6-b967-7a558046e847", "Admin", "ADMIN" },
-                    { "9243d485-8457-4987-8989-989e609ebd5f", "54677366-c8bc-410b-874c-95acb9756406", "League Owner", "LEAGUE OWNER" },
-                    { "3be23b10-7d37-4bb1-b883-7a32e82382e5", "c7ee71b6-8f3f-491e-94ba-876279287b2c", "Team Owner", "TEAM OWNER" },
-                    { "18de3721-15d0-484f-be01-1079f489b9a6", "49ad617a-3d9c-4b66-be8b-6b3074d5858b", "Referee", "REFEREE" },
-                    { "b9a11e9e-6787-4a5a-9952-ddb9ce645f1a", "197347ec-7d34-42c8-bad7-a28eb12212d8", "Player", "PLAYER" }
+                    { "d02fea09-1540-441a-abdd-17e49ebd360a", "9b4f7143-339d-49b9-8ba7-24afcb144a45", "Admin", "ADMIN" },
+                    { "7cad5575-1a59-4955-bfe7-bb5c98da1bb0", "44592f54-76a2-49d4-82a7-e17ca7558c2c", "League Owner", "LEAGUE OWNER" },
+                    { "a5aeabcd-a229-4b26-882f-10ad323fbbfa", "6174ead5-1614-4921-b5a2-3426a497b51e", "Team Owner", "TEAM OWNER" },
+                    { "daa89f97-a2d9-4872-a909-408089dd6439", "0f82885e-8435-42d1-b1e6-8091eca92098", "Referee", "REFEREE" },
+                    { "662af38e-e948-42d9-bfa8-0f46d1e3446c", "96b12759-e02f-475c-9524-b42f21bc5a31", "Player", "PLAYER" }
                 });
 
             migrationBuilder.InsertData(

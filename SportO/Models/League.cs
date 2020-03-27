@@ -18,7 +18,7 @@ namespace SportO_SLMS.Models
         public string leagueName { get; set; }
 
         [Required]
-        [Display(Name = "Team Capacity")]
+        [Display(Name = "Available Spots")]
         public int teamCapacity { get; set; }
 
         [ForeignKey("LeagueOwner")]
