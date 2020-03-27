@@ -83,7 +83,28 @@ namespace SportO.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if(await _userManager.IsInRoleAsync(user, "LeagueOwner"))
+                    {
+                        return RedirectToAction("Index", "LeagueOwners");
+                    }
+                    else if (await _userManager.IsInRoleAsync(user, "TeamOwner"))
+                    {
+                        return RedirectToAction("Index", "TeamOwners");
+                    }
+                    else if (await _userManager.IsInRoleAsync(user, "Referee"))
+                    {
+                        return RedirectToAction("Index", "Referees");
+                    }
+                    else if (await _userManager.IsInRoleAsync(user, "Player"))
+                    {
+                        return RedirectToAction("Index", "Players");
+                    }
+                    else 
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
